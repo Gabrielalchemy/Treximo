@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+@theme {
+  /* ── Treximo dark-only palette ─────────────────────────── */
+  --color-base: #0a0b0d;
+  --color-surface: #121417;
+  --color-surface-2: #1a1d22;
+  --color-line: rgba(255, 255, 255, 0.08);
+
+  --color-volt: #c8ff2e;
+  --color-volt-dim: #9dcc1a;
+  --color-danger: #ff5449;
+
+  --color-text: #f2f4f6;
+  --color-muted: #8a919c;
+  --color-faint: #565d68;
+
+  /* ── Type ──────────────────────────────────────────────── */
+  --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
+  --font-ui: 'Inter Variable', system-ui, sans-serif;
+
+  /* ── Motion ────────────────────────────────────────────── */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  background-color: var(--color-base);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--color-text);
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Tabular figures so live timers never jitter */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Safe-area helpers for notched devices */
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top), 1rem);
+}
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+}
+
+::selection {
+  background: var(--color-volt);
+  color: var(--color-base);
+}
