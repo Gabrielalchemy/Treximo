@@ -7,6 +7,7 @@ import {
 } from '../db/db'
 import { TrackingEngine, browserGeoWatch, type RunResult } from '../lib/tracker'
 import { useSettings } from './settings'
+import { useGoal } from './goal'
 
 /** App-wide tracker singleton. */
 export const engine = new TrackingEngine(browserGeoWatch(), {
@@ -62,7 +63,7 @@ export async function finishRun(): Promise<string | null> {
   if (!res) return null
   const id = activeId ?? newRunId()
   activeId = null
-  await saveCompletedRun(id, res)
+  await saveCompletedRun(id, res, useGoal.getState().runGoal)
   return id
 }
 

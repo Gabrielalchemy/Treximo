@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { db, type StoredRun } from '../db/db'
 import { importGpxFiles } from '../lib/gpx'
 import { UploadIcon } from '../components/icons'
+import { WeeklyGoalCard } from '../components/WeeklyGoalCard'
 import { useSettings } from '../state/settings'
 import { navigate } from '../state/router'
 import {
@@ -117,6 +118,8 @@ export function HistoryScreen() {
           </motion.p>
         )}
       </AnimatePresence>
+
+      <WeeklyGoalCard runs={runs} />
 
       {!runs ? (
         <div className="mt-10 space-y-3" aria-hidden>

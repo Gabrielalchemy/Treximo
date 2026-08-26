@@ -11,6 +11,11 @@ describe('App smoke', () => {
     expect(screen.getByText('Time')).toBeTruthy()
     expect(screen.getByText('Distance')).toBeTruthy()
     expect(screen.getByRole('button', { name: 'Start run' })).toBeTruthy()
+
+    // Pre-run goal picker chips
+    for (const chip of ['None', '5K', '10K', 'Custom']) {
+      expect(screen.getByRole('button', { name: chip })).toBeTruthy()
+    }
   })
 
   it('navigates to history and shows the empty state', async () => {
@@ -42,6 +47,7 @@ describe('App smoke', () => {
       distanceM: 1000,
       movingMs: 100_000,
       points,
+      goal: { kind: 'distance', targetM: 1000 },
     })
 
     window.location.hash = `#/run/${id}`
@@ -53,6 +59,8 @@ describe('App smoke', () => {
     expect(screen.getAllByText('Splits').length).toBeGreaterThan(0)
     // Hero distance unit (metric); pace label may also contain it.
     expect(screen.getAllByText('km').length).toBeGreaterThan(0)
+    // Achieved goal badge
+    expect(await screen.findByText('Goal hit · 1K')).toBeTruthy()
 
     await db.runs.delete(id)
     window.location.hash = ''

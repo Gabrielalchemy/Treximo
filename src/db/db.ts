@@ -1,5 +1,6 @@
 import Dexie, { type EntityTable } from 'dexie'
 import type { GeoPoint } from '../lib/geo'
+import type { RunGoal } from '../lib/goals'
 
 export interface StoredRun {
   id: string
@@ -14,6 +15,8 @@ export interface StoredRun {
   distanceM: number
   movingMs: number
   points: GeoPoint[]
+  /** goal this run was attempted with, when one was set */
+  goal?: RunGoal
 }
 
 class TreximoDB extends Dexie {
@@ -64,6 +67,7 @@ export async function saveCompletedRun(
     startedAt: number
     endedAt: number
   },
+  goal?: RunGoal,
 ): Promise<string> {
   await db.transaction('rw', db.runs, async () => {
     await db.runs.delete(id)
@@ -75,6 +79,7 @@ export async function saveCompletedRun(
       distanceM: result.distanceM,
       movingMs: result.movingMs,
       points: [...result.points],
+      ...(goal && goal.kind !== 'none' ? { goal } : {}),
     })
   })
   return id

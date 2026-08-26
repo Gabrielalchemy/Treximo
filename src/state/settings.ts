@@ -10,10 +10,13 @@ interface SettingsState {
   haptics: boolean
   /** pause automatically when the runner stops; resume on movement */
   autoPause: boolean
+  /** read splits and goal milestones aloud while recording */
+  voice: boolean
   setUnits: (u: Units) => void
   setAccuracyCutoffM: (m: number) => void
   setHaptics: (on: boolean) => void
   setAutoPause: (on: boolean) => void
+  setVoice: (on: boolean) => void
 }
 
 export const useSettings = create<SettingsState>()(
@@ -23,10 +26,12 @@ export const useSettings = create<SettingsState>()(
       accuracyCutoffM: 25,
       haptics: true,
       autoPause: true,
+      voice: false,
       setUnits: (units) => set({ units }),
       setAccuracyCutoffM: (accuracyCutoffM) => set({ accuracyCutoffM }),
       setHaptics: (haptics) => set({ haptics }),
       setAutoPause: (autoPause) => set({ autoPause }),
+      setVoice: (voice) => set({ voice }),
     }),
     { name: 'treximo-settings' },
   ),

@@ -61,3 +61,9 @@ export const UploadIcon = ({ className }: IconProps) => (
     <path d="M4 17v1.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V17" />
   </svg>
 )
+
+export const CheckIcon = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+    <path d="m5 12.5 4.5 4.5L19 7.5" />
+  </svg>
+)

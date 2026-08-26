@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ControlDock } from '../components/ControlDock'
 import { GpsPill, type GpsState } from '../components/GpsPill'
+import { GoalPicker } from '../components/GoalPicker'
+import { GoalProgressCard } from '../components/GoalProgressCard'
 import { StatTile } from '../components/StatTile'
 import { useGeoTracker } from '../hooks/useGeoTracker'
 import { useWakeLock } from '../hooks/useWakeLock'
@@ -13,6 +15,7 @@ import {
 } from '../state/session'
 import { navigate } from '../state/router'
 import { useSettings } from '../state/settings'
+import { useGoal } from '../state/goal'
 import {
   distanceLabel,
   formatDistance,
@@ -31,6 +34,7 @@ import {
 export function RecordScreen() {
   const { snapshot, displayedMovingMs, currentPaceSecPerKm, live } = useGeoTracker()
   const units = useSettings((s) => s.units)
+  const runGoal = useGoal((s) => s.runGoal)
   const [confirming, setConfirming] = useState(false)
   const [trackerError, setTrackerError] = useState<TrackerError | null>(null)
 
@@ -119,6 +123,14 @@ export function RecordScreen() {
           />
         </div>
 
+        {(live || paused) && (
+          <GoalProgressCard
+            goal={runGoal}
+            distanceM={snapshot.distanceM}
+            movingMs={displayedMovingMs}
+          />
+        )}
+
         <AnimatePresence>
           {paused && (
             <motion.p
@@ -145,6 +157,22 @@ export function RecordScreen() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Goal picker (pre-run) */}
+      <AnimatePresence>
+        {snapshot.status === 'idle' && (
+          <motion.div
+            key="goal-picker"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={pageEase}
+            className="pb-3"
+          >
+            <GoalPicker />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Controls */}
       <div className="pb-safe">

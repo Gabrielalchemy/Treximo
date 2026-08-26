@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion'
 import { useSettings, type Units } from '../state/settings'
+import { useGoal } from '../state/goal'
+import { distanceLabel, formatDistance } from '../lib/format'
 import { staggerParent, riseChild } from '../motion/variants'
 
 const UNIT_OPTIONS: { id: Units; label: string; hint: string }[] = [
@@ -7,17 +9,40 @@ const UNIT_OPTIONS: { id: Units; label: string; hint: string }[] = [
   { id: 'imperial', label: 'MI', hint: 'Miles' },
 ]
 
+const M_PER_MI = 1609.344
+
 export function SettingsScreen() {
   const {
     units,
     accuracyCutoffM,
     haptics,
     autoPause,
+    voice,
     setUnits,
     setAccuracyCutoffM,
     setHaptics,
     setAutoPause,
+    setVoice,
   } = useSettings()
+  const weeklyGoalM = useGoal((s) => s.weeklyGoalM)
+  const setWeeklyGoalM = useGoal((s) => s.setWeeklyGoalM)
+
+  const weeklyStepM = units === 'metric' ? 5000 : Math.round(5 * M_PER_MI)
+  const weeklyMinM = units === 'metric' ? 5000 : Math.round(3 * M_PER_MI)
+  const weeklyMaxM = units === 'metric' ? 150_000 : Math.round(100 * M_PER_MI)
+
+  function toggleWeeklyGoal() {
+    if (weeklyGoalM != null) {
+      setWeeklyGoalM(null)
+    } else {
+      setWeeklyGoalM(units === 'metric' ? 30_000 : Math.round(20 * M_PER_MI))
+    }
+  }
+
+  function stepWeeklyGoal(dir: 1 | -1) {
+    const raw = (weeklyGoalM ?? 0) + dir * weeklyStepM
+    setWeeklyGoalM(Math.min(weeklyMaxM, Math.max(weeklyMinM, Math.round(raw / 10) * 10)))
+  }
 
   return (
     <div className="h-full overflow-y-auto px-6 pt-safe pb-safe">
@@ -71,6 +96,52 @@ export function SettingsScreen() {
           </div>
         </motion.section>
 
+        {/* Weekly goal */}
+        <motion.section
+          variants={riseChild}
+          className="rounded-3xl border border-line bg-surface p-5"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-[11px] font-bold uppercase tracking-[0.24em] text-muted">
+                Weekly goal
+              </h2>
+              <p className="mt-1 text-[11px] text-faint">
+                A distance to hit every week.
+              </p>
+            </div>
+            <Switch on={weeklyGoalM != null} onToggle={toggleWeeklyGoal} />
+          </div>
+          {weeklyGoalM != null && (
+            <div className="mt-4 flex items-center justify-between rounded-2xl bg-surface-2 px-3 py-2">
+              <motion.button
+                type="button"
+                aria-label="Decrease weekly goal"
+                whileTap={{ scale: 0.88 }}
+                onClick={() => stepWeeklyGoal(-1)}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-xl font-bold text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+              >
+                −
+              </motion.button>
+              <div className="flex items-baseline gap-1">
+                <span className="font-display text-2xl font-bold tabular text-volt">
+                  {formatDistance(weeklyGoalM, units, 0)}
+                </span>
+                <span className="text-sm text-muted">{distanceLabel(units)}</span>
+              </div>
+              <motion.button
+                type="button"
+                aria-label="Increase weekly goal"
+                whileTap={{ scale: 0.88 }}
+                onClick={() => stepWeeklyGoal(1)}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-xl font-bold text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+              >
+                +
+              </motion.button>
+            </div>
+          )}
+        </motion.section>
+
         {/* GPS accuracy cutoff */}
         <motion.section
           variants={riseChild}
@@ -113,6 +184,22 @@ export function SettingsScreen() {
             </p>
           </div>
           <Switch on={autoPause} onToggle={() => setAutoPause(!autoPause)} />
+        </motion.section>
+
+        {/* Voice */}
+        <motion.section
+          variants={riseChild}
+          className="flex items-center justify-between rounded-3xl border border-line bg-surface p-5"
+        >
+          <div>
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.24em] text-muted">
+              Voice
+            </h2>
+            <p className="mt-1 text-[11px] text-faint">
+              Reads splits and goal milestones aloud.
+            </p>
+          </div>
+          <Switch on={voice} onToggle={() => setVoice(!voice)} />
         </motion.section>
 
         {/* Haptics */}

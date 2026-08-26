@@ -5,10 +5,11 @@ import { db } from '../db/db'
 import { deleteRun } from '../state/session'
 import { navigate } from '../state/router'
 import { useSettings } from '../state/settings'
-import { ChevronLeftIcon, ShareIcon, TrashIcon } from '../components/icons'
+import { ChevronLeftIcon, CheckIcon, ShareIcon, TrashIcon } from '../components/icons'
 import { RouteSvg } from '../components/RouteSvg'
 import { SplitsBars } from '../components/SplitsBars'
 import { PaceChart } from '../components/PaceChart'
+import { goalAchieved, goalLabel } from '../lib/goals'
 import { exportRunGpx } from '../lib/gpx'
 import {
   distanceLabel,
@@ -80,6 +81,26 @@ export function RunDetailScreen({ id }: { id: string }) {
           </span>
           <span className="text-lg font-medium text-muted">{distanceLabel(units)}</span>
         </motion.div>
+
+        {/* Goal badge */}
+        {run.goal && (
+          <motion.div variants={riseChild} className="mt-3">
+            <span
+              className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] ${
+                goalAchieved(run.goal, run.distanceM, run.movingMs)
+                  ? 'border-volt/40 bg-volt/10 text-volt'
+                  : 'border-line bg-surface text-muted'
+              }`}
+            >
+              {goalAchieved(run.goal, run.distanceM, run.movingMs) && (
+                <CheckIcon className="h-3.5 w-3.5" />
+              )}
+              {goalAchieved(run.goal, run.distanceM, run.movingMs)
+                ? `Goal hit · ${goalLabel(run.goal, units)}`
+                : `Target ${goalLabel(run.goal, units)}`}
+            </span>
+          </motion.div>
+        )}
 
         {/* Secondary stats */}
         <motion.div
