@@ -16,7 +16,7 @@ function tabForRoute(r: Route): Tab {
   const key = routeKey(route)
 
   return (
-    <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(244,168,222,0.12),transparent_28%),linear-gradient(180deg,#0b1330_0%,#111c3a_100%)] shadow-[0_30px_80px_rgba(0,0,0,0.45)] ring-1 ring-white/5">
+    <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden bg-[linear-gradient(180deg,#0a1024_0%,#0e1834_100%)] shadow-[0_30px_80px_rgba(9,14,30,0.42)] ring-1 ring-white/5">
       <main className="relative flex-1 overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div

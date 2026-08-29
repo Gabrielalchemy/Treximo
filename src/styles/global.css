@@ -1,18 +1,18 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-base: #0b1330;
-  --color-surface: #121d3f;
-  --color-surface-2: #1b264a;
-  --color-line: rgba(255, 255, 255, 0.08);
+  --color-base: #0a1024;
+  --color-surface: #121c33;
+  --color-surface-2: #182545;
+  --color-line: rgba(255, 255, 255, 0.06);
 
-  --color-volt: #f4a8de;
-  --color-volt-dim: #d981c5;
-  --color-danger: #ff5449;
+  --color-volt: #f4afd9;
+  --color-volt-dim: #d98dc3;
+  --color-danger: #ff5d70;
 
-  --color-text: #f8ebff;
-  --color-muted: #c0bfd7;
-  --color-faint: #8a95b6;
+  --color-text: #f6f1ff;
+  --color-muted: #c4c6d6;
+  --color-faint: #8690b3;
 
   --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
   --font-ui: 'Inter Variable', system-ui, sans-serif;
@@ -27,8 +27,8 @@ body,
 
 html {
   background:
-    radial-gradient(circle at top, rgba(244, 168, 222, 0.18), transparent 28%),
-    linear-gradient(180deg, #0b1330 0%, #111c3a 100%);
+    radial-gradient(circle at top, rgba(244, 175, 217, 0.08), transparent 28%),
+    linear-gradient(180deg, #0a1024 0%, #0d1633 100%);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -36,6 +36,7 @@ body {
   margin: 0;
   font-family: var(--font-ui);
   color: var(--color-text);
+  letter-spacing: -0.01em;
   overscroll-behavior-y: none;
   -webkit-font-smoothing: antialiased;
   background: transparent;

@@ -107,7 +107,7 @@ export function HistoryScreen() {
 
   return (
     <div className="h-full overflow-y-auto px-6 pt-safe">
-      <header className="mt-2 flex items-start justify-between rounded-[28px] border border-white/8 bg-white/[0.02] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+      <header className="mt-2 flex items-start justify-between rounded-[28px] border border-white/6 bg-white/[0.015] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
         <div>
           <h1 className="font-display text-2xl font-bold tracking-tight">History</h1>
           <p className="text-xs text-muted">Every mile lives on this device.</p>
@@ -288,7 +288,7 @@ function EmptyHistory() {
           animate={{ pathLength: 1 }}
           transition={{ duration: 1.4, ease: 'easeInOut', delay: 0.3 }}
         />
-        <circle cx="104" cy="18" r="5" fill="#f4a8de" />
+        <circle cx="104" cy="18" r="5" fill="#f4afd9" />
       </svg>
       <p className="mt-4 font-display text-lg font-bold">No runs yet</p>
       <p className="mt-1 max-w-[240px] text-xs leading-relaxed text-muted">

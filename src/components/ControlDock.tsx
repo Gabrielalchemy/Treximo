@@ -50,14 +50,14 @@ export function ControlDock({
   onStopRequest,
 }: ControlDockProps) {
   return (
-    <div className="grid h-44 grid-cols-3 items-center justify-items-center rounded-[28px] border border-white/8 bg-white/[0.02] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+    <div className="grid h-44 grid-cols-3 items-center justify-items-center rounded-[28px] border border-white/6 bg-white/[0.015] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
       <AnimatePresence mode="popLayout" initial={false}>
         {status === 'idle' ? (
           <motion.div key="start" className="col-start-2" {...swap()}>
             <TapButton
               onPress={onStart}
               label="Start run"
-              className="h-28 w-28 bg-[linear-gradient(180deg,#f8c2e4,#f39bdb)] text-base text-base shadow-[0_18px_40px_rgba(244,168,222,0.38)]"
+              className="h-28 w-28 bg-[linear-gradient(180deg,#f5c2e7,#f0a2d7)] text-base text-base shadow-[0_16px_36px_rgba(244,175,217,0.18)]"
             >
               <PlayIcon className="ml-1.5 h-11 w-11" />
             </TapButton>
@@ -88,7 +88,7 @@ export function ControlDock({
                   cy="60"
                   r={R}
                   fill="none"
-                  stroke="#f4a8de"
+                  stroke="#f4afd9"
                   strokeWidth="5"
                   strokeLinecap="round"
                   strokeDasharray={CIRC}
@@ -101,7 +101,7 @@ export function ControlDock({
               <TapButton
                 onPress={onPause}
                 label="Pause run"
-                className="m-4 h-24 w-24 bg-[linear-gradient(180deg,#f8c2e4,#f39bdb)] text-base text-base shadow-[0_18px_40px_rgba(244,168,222,0.38)]"
+                className="m-4 h-24 w-24 bg-[linear-gradient(180deg,#f5c2e7,#f0a2d7)] text-base text-base shadow-[0_16px_36px_rgba(244,175,217,0.18)]"
               >
                 <PauseIcon className="h-9 w-9" />
               </TapButton>
@@ -139,7 +139,7 @@ export function ControlDock({
               <TapButton
                 onPress={onResume}
                 label="Resume run"
-                className="h-24 w-24 bg-[linear-gradient(180deg,#f8c2e4,#f39bdb)] text-base text-base shadow-[0_18px_40px_rgba(244,168,222,0.38)]"
+                className="h-24 w-24 bg-[linear-gradient(180deg,#f5c2e7,#f0a2d7)] text-base text-base shadow-[0_16px_36px_rgba(244,175,217,0.18)]"
               >
                 <PlayIcon className="ml-1 h-10 w-10" />
               </TapButton>

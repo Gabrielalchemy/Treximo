@@ -82,7 +82,7 @@ export function StatsScreen() {
 
   return (
     <div className="h-full overflow-y-auto px-6 pt-safe pb-safe">
-      <header className="mt-2 rounded-[28px] border border-white/8 bg-white/[0.02] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+      <header className="mt-2 rounded-[28px] border border-white/6 bg-white/[0.015] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
         <h1 className="font-display text-2xl font-bold tracking-tight">Stats</h1>
         <p className="text-xs text-muted">Progress you can feel.</p>
       </header>
@@ -106,7 +106,7 @@ export function StatsScreen() {
           {/* All-time hero */}
           <motion.div
             variants={riseChild}
-            className="grid grid-cols-3 divide-x divide-line rounded-[30px] border border-white/8 bg-[linear-gradient(180deg,rgba(21,25,31,0.88),rgba(17,20,25,0.86))] py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
+            className="grid grid-cols-3 divide-x divide-line rounded-[30px] border border-white/6 bg-[linear-gradient(180deg,rgba(18,28,51,0.8),rgba(14,22,42,0.86))] py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.025)]"
           >
             <HeroMetric
               label="Distance"
@@ -360,7 +360,7 @@ function EmptyStats() {
         />
         <motion.line
           x1="86" y1="66" x2="106" y2="20"
-          stroke="#f4a8de" strokeWidth="4" strokeLinecap="round"
+          stroke="#f4afd9" strokeWidth="4" strokeLinecap="round"
           initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
           transition={{ duration: 0.45, delay: 0.8 }}
         />

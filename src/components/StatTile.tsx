@@ -28,9 +28,9 @@ export function StatTile({ label, value, unit, hero, size = 'lg' }: StatTileProp
       <div className="mt-1 flex items-baseline gap-1.5">
         <AnimatedNumber
           text={value}
-          className={`font-display font-bold leading-none tracking-tight tabular ${
+          className={`font-display font-bold leading-none tracking-[-0.06em] tabular ${
             SIZES[size]
-          } ${hero ? 'text-volt drop-shadow-[0_0_24px_rgba(244,168,222,0.25)]' : 'text-text'}`}
+          } ${hero ? 'text-volt drop-shadow-[0_0_18px_rgba(244,175,217,0.18)]' : 'text-text'}`}
         />
         {unit && (
           <span className="text-sm font-medium text-muted">{unit}</span>

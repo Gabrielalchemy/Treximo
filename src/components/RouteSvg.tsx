@@ -42,21 +42,21 @@ export function RouteSvg({
       <motion.path
         d={path.d}
         fill="none"
-        stroke="#f4a8de"
+        stroke="#f4afd9"
         strokeWidth={4}
         strokeLinecap="round"
         strokeLinejoin="round"
         initial={animate ? { pathLength: 0, opacity: 0.6 } : false}
         animate={{ pathLength: 1, opacity: 1 }}
         transition={{ duration: 1.8, ease: 'easeInOut' }}
-        style={{ filter: 'drop-shadow(0 0 6px rgba(244,168,222,0.35))' }}
+        style={{ filter: 'drop-shadow(0 0 6px rgba(244,175,217,0.2))' }}
       />
       <motion.circle
         cx={path.startX}
         cy={path.startY}
         r={5}
         fill="#F2F4F6"
-        stroke="#f4a8de"
+        stroke="#f4afd9"
         strokeWidth={2.5}
         initial={animate ? { scale: 0, opacity: 0 } : false}
         animate={{ scale: 1, opacity: 1 }}
@@ -68,8 +68,8 @@ export function RouteSvg({
         transition={{ delay: 1.85, type: 'spring', stiffness: 400, damping: 18 }}
         style={{ originX: `${path.endX}px`, originY: `${path.endY}px` }}
       >
-        <circle cx={path.endX} cy={path.endY} r={9} fill="rgba(244,168,222,0.25)" />
-        <circle cx={path.endX} cy={path.endY} r={4.5} fill="#f4a8de" />
+        <circle cx={path.endX} cy={path.endY} r={9} fill="rgba(244,175,217,0.18)" />
+        <circle cx={path.endX} cy={path.endY} r={4.5} fill="#f4afd9" />
       </motion.g>
     </svg>
   )

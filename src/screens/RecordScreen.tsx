@@ -77,7 +77,7 @@ export function RecordScreen() {
   return (
     <div className="flex h-full flex-col px-6 pt-safe">
       {/* Header */}
-      <header className="mt-2 flex items-center justify-between rounded-full border border-white/8 bg-white/[0.02] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+      <header className="mt-2 flex items-center justify-between rounded-full border border-white/6 bg-white/[0.015] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
         <span className="font-display text-sm font-bold tracking-[0.28em] text-text">
           TREXIMO
         </span>
@@ -102,7 +102,7 @@ export function RecordScreen() {
       </AnimatePresence>
 
       {/* Stats */}
-      <div className="mt-4 flex flex-1 flex-col items-center justify-center gap-8 rounded-[32px] border border-white/8 bg-surface/40 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+      <div className="mt-4 flex flex-1 flex-col items-center justify-center gap-8 rounded-[32px] border border-white/6 bg-white/[0.012] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
         <StatTile label="Time" value={formatClock(displayedMovingMs)} size="xl" />
 
         <div className="flex w-full max-w-xs items-start justify-between gap-3">

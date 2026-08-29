@@ -23,7 +23,7 @@ export function TabBar({
 
   return (
     <nav
-      className="relative z-20 rounded-[28px] border border-white/8 bg-surface/75 pb-safe shadow-[0_-8px_24px_rgba(0,0,0,0.18)] backdrop-blur-2xl"
+      className="relative z-20 rounded-[28px] border border-white/6 bg-surface/75 pb-safe shadow-[0_-12px_28px_rgba(6,10,22,0.18)] backdrop-blur-2xl"
       aria-label="Main"
     >
       <div className="mx-auto grid max-w-md grid-cols-4 gap-1 px-2 py-2">
@@ -44,7 +44,7 @@ export function TabBar({
               {active && (
                 <motion.span
                   layoutId="tab-pill"
-                  className="absolute inset-1 rounded-2xl bg-[linear-gradient(180deg,rgba(244,168,222,0.18),rgba(244,168,222,0.06))] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+                  className="absolute inset-1 rounded-2xl bg-[linear-gradient(180deg,rgba(244,175,217,0.12),rgba(255,255,255,0.02))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                   transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                 />
               )}
