@@ -30,7 +30,7 @@ export function StatTile({ label, value, unit, hero, size = 'lg' }: StatTileProp
           text={value}
           className={`font-display font-bold leading-none tracking-tight tabular ${
             SIZES[size]
-          } ${hero ? 'text-volt drop-shadow-[0_0_24px_rgba(200,255,46,0.25)]' : 'text-text'}`}
+          } ${hero ? 'text-volt drop-shadow-[0_0_24px_rgba(244,168,222,0.25)]' : 'text-text'}`}
         />
         {unit && (
           <span className="text-sm font-medium text-muted">{unit}</span>

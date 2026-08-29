@@ -1,18 +1,18 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-base: #090b0d;
-  --color-surface: #12171c;
-  --color-surface-2: #1a2028;
+  --color-base: #0b1330;
+  --color-surface: #121d3f;
+  --color-surface-2: #1b264a;
   --color-line: rgba(255, 255, 255, 0.08);
 
-  --color-volt: #c8ff2e;
-  --color-volt-dim: #9dcc1a;
+  --color-volt: #f4a8de;
+  --color-volt-dim: #d981c5;
   --color-danger: #ff5449;
 
-  --color-text: #f4f7fb;
-  --color-muted: #9aa5b1;
-  --color-faint: #606b76;
+  --color-text: #f8ebff;
+  --color-muted: #c0bfd7;
+  --color-faint: #8a95b6;
 
   --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
   --font-ui: 'Inter Variable', system-ui, sans-serif;
@@ -27,8 +27,8 @@ body,
 
 html {
   background:
-    radial-gradient(circle at top, rgba(200, 255, 46, 0.08), transparent 28%),
-    linear-gradient(180deg, #090b0d 0%, #101419 100%);
+    radial-gradient(circle at top, rgba(244, 168, 222, 0.18), transparent 28%),
+    linear-gradient(180deg, #0b1330 0%, #111c3a 100%);
   -webkit-tap-highlight-color: transparent;
 }
 

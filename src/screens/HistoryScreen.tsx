@@ -288,7 +288,7 @@ function EmptyHistory() {
           animate={{ pathLength: 1 }}
           transition={{ duration: 1.4, ease: 'easeInOut', delay: 0.3 }}
         />
-        <circle cx="104" cy="18" r="5" fill="#C8FF2E" />
+        <circle cx="104" cy="18" r="5" fill="#f4a8de" />
       </svg>
       <p className="mt-4 font-display text-lg font-bold">No runs yet</p>
       <p className="mt-1 max-w-[240px] text-xs leading-relaxed text-muted">

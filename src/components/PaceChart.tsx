@@ -45,8 +45,8 @@ export function PaceChart({
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full" role="img" aria-label="Pace over distance">
         <defs>
           <linearGradient id="pace-glow" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#C8FF2E" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#C8FF2E" stopOpacity="0" />
+            <stop offset="0%" stopColor="#f4a8de" stopOpacity="0.22" />
+            <stop offset="100%" stopColor="#f4a8de" stopOpacity="0" />
           </linearGradient>
         </defs>
         {paths.map((d, i) => (
@@ -54,7 +54,7 @@ export function PaceChart({
             key={i}
             d={d}
             fill="none"
-            stroke="#C8FF2E"
+            stroke="#f4a8de"
             strokeWidth={2.5}
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -62,7 +62,7 @@ export function PaceChart({
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 1.4, ease: 'easeInOut', delay: 0.2 }}
             style={{
-              filter: 'drop-shadow(0 0 4px rgba(200,255,46,0.3))',
+              filter: 'drop-shadow(0 0 4px rgba(244,168,222,0.3))',
               transformOrigin: 'top',
             }}
           />

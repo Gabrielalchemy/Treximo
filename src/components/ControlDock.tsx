@@ -57,7 +57,7 @@ export function ControlDock({
             <TapButton
               onPress={onStart}
               label="Start run"
-              className="h-28 w-28 bg-[linear-gradient(180deg,#d8ff5c,#b9f118)] text-base text-base shadow-[0_18px_40px_rgba(200,255,46,0.4)]"
+              className="h-28 w-28 bg-[linear-gradient(180deg,#f8c2e4,#f39bdb)] text-base text-base shadow-[0_18px_40px_rgba(244,168,222,0.38)]"
             >
               <PlayIcon className="ml-1.5 h-11 w-11" />
             </TapButton>
@@ -88,7 +88,7 @@ export function ControlDock({
                   cy="60"
                   r={R}
                   fill="none"
-                  stroke="#C8FF2E"
+                  stroke="#f4a8de"
                   strokeWidth="5"
                   strokeLinecap="round"
                   strokeDasharray={CIRC}
@@ -101,14 +101,14 @@ export function ControlDock({
               <TapButton
                 onPress={onPause}
                 label="Pause run"
-                className="m-4 h-24 w-24 bg-[linear-gradient(180deg,#d8ff5c,#b9f118)] text-base text-base shadow-[0_18px_40px_rgba(200,255,46,0.38)]"
+                className="m-4 h-24 w-24 bg-[linear-gradient(180deg,#f8c2e4,#f39bdb)] text-base text-base shadow-[0_18px_40px_rgba(244,168,222,0.38)]"
               >
                 <PauseIcon className="h-9 w-9" />
               </TapButton>
 
               <motion.span
                 aria-hidden
-                className="absolute inset-4 rounded-full border border-volt/50"
+                className="absolute inset-4 rounded-full border border-volt/60"
                 animate={{ scale: [1, 1.12], opacity: [0.7, 0] }}
                 transition={{ duration: 1.8, repeat: Infinity, ease: 'easeOut' }}
               />
@@ -139,7 +139,7 @@ export function ControlDock({
               <TapButton
                 onPress={onResume}
                 label="Resume run"
-                className="h-24 w-24 bg-[linear-gradient(180deg,#d8ff5c,#b9f118)] text-base text-base shadow-[0_18px_40px_rgba(200,255,46,0.38)]"
+                className="h-24 w-24 bg-[linear-gradient(180deg,#f8c2e4,#f39bdb)] text-base text-base shadow-[0_18px_40px_rgba(244,168,222,0.38)]"
               >
                 <PlayIcon className="ml-1 h-10 w-10" />
               </TapButton>

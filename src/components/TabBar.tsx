@@ -44,7 +44,7 @@ export function TabBar({
               {active && (
                 <motion.span
                   layoutId="tab-pill"
-                  className="absolute inset-1 rounded-2xl bg-[linear-gradient(180deg,rgba(200,255,46,0.16),rgba(200,255,46,0.06))] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
+                  className="absolute inset-1 rounded-2xl bg-[linear-gradient(180deg,rgba(244,168,222,0.18),rgba(244,168,222,0.06))] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
                   transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                 />
               )}

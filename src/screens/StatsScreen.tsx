@@ -360,7 +360,7 @@ function EmptyStats() {
         />
         <motion.line
           x1="86" y1="66" x2="106" y2="20"
-          stroke="#C8FF2E" strokeWidth="4" strokeLinecap="round"
+          stroke="#f4a8de" strokeWidth="4" strokeLinecap="round"
           initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
           transition={{ duration: 0.45, delay: 0.8 }}
         />

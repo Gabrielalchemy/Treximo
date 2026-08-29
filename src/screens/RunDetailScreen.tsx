@@ -76,7 +76,7 @@ export function RunDetailScreen({ id }: { id: string }) {
       <motion.div variants={staggerParent} initial="initial" animate="animate" className="mt-6">
         {/* Hero distance */}
         <motion.div variants={riseChild} className="flex items-baseline gap-2">
-          <span className="font-display text-7xl font-bold tabular leading-none text-volt drop-shadow-[0_0_28px_rgba(200,255,46,0.22)]">
+          <span className="font-display text-7xl font-bold tabular leading-none text-volt drop-shadow-[0_0_28px_rgba(244,168,222,0.22)]">
             {formatDistance(run.distanceM, units)}
           </span>
           <span className="text-lg font-medium text-muted">{distanceLabel(units)}</span>

@@ -166,7 +166,7 @@ export function SettingsScreen() {
             value={accuracyCutoffM}
             onChange={(e) => setAccuracyCutoffM(Number(e.target.value))}
             aria-label="GPS accuracy cutoff in meters"
-            className="mt-3 w-full accent-[#C8FF2E]"
+            className="mt-3 w-full accent-[#f4a8de]"
           />
         </motion.section>
 
