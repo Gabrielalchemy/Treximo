@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: './',
   plugins: [
     react(),
     tailwindcss(),
@@ -12,7 +13,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
       manifest: {
-        id: '/',
+        id: './',
         name: 'Treximo — Run Tracker',
         short_name: 'Treximo',
         description: 'Offline-first GPS run tracker. Your miles, always yours.',
@@ -20,13 +21,14 @@ export default defineConfig({
         background_color: '#0A0B0D',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/',
+        start_url: './',
+        scope: './',
         categories: ['health', 'fitness', 'sports'],
         icons: [
-          { src: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-          { src: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+          { src: './icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: './icons/icon-512.png', sizes: '512x512', type: 'image/png' },
           {
-            src: '/icons/maskable-512.png',
+            src: './icons/maskable-512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
@@ -35,7 +37,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
-        navigateFallback: '/index.html',
+        navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
       },
     }),
