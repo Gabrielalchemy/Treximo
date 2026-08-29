@@ -67,3 +67,9 @@ export const CheckIcon = ({ className }: IconProps) => (
     <path d="m5 12.5 4.5 4.5L19 7.5" />
   </svg>
 )
+
+export const StatsIcon = ({ className }: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" className={className} aria-hidden>
+    <path d="M5.5 19v-6M12 19V5.5M18.5 19v-9" />
+  </svg>
+)

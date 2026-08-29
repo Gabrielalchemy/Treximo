@@ -174,3 +174,47 @@ export function paceSeriesSecPerKm(
     return durMs / 1000 / (bucketM / 1000)
   })
 }
+
+/**
+ * Fastest time (seconds) to cover any contiguous window of exactly
+ * `targetM` meters inside one run — the machinery behind best-effort PRs.
+ *
+ * O(n) sweep with a monotonic left pointer; window edges are interpolated
+ * linearly between fixes. Returns null when the run never reaches the
+ * target. Elapsed wall time is used as-is across dropout gaps.
+ */
+export function bestEffortSec(
+  points: readonly GeoPoint[],
+  targetM: number,
+): number | null {
+  const n = points.length
+  if (n < 2 || !(targetM > 0)) return null
+
+  const cum = new Float64Array(n)
+  for (let i = 1; i < n; i++) {
+    cum[i] = cum[i - 1]! + pointDistanceM(points[i - 1]!, points[i]!)
+  }
+  if (cum[n - 1]! < targetM) return null
+
+  let best = Infinity
+  let a = 0 // largest index with cum[a] <= cum[b] - targetM
+
+  for (let b = 1; b < n; b++) {
+    const edge = cum[b]! - targetM
+    if (edge < 0) continue
+    while (a + 1 < b && cum[a + 1]! <= edge) a++
+    if (cum[a]! > edge) continue // not enough distance yet
+
+    // Window starts at or inside segment [a, a+1].
+    let startT = points[a]!.t
+    if (cum[a]! < edge && a + 1 < n) {
+      const segD = cum[a + 1]! - cum[a]!
+      const ratio = segD > 0 ? (edge - cum[a]!) / segD : 0
+      startT += (points[a + 1]!.t - points[a]!.t) * ratio
+    }
+
+    const sec = (points[b]!.t - startT) / 1000
+    if (sec > 0 && sec < best) best = sec
+  }
+  return Number.isFinite(best) ? best : null
+}

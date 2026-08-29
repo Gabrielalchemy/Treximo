@@ -30,6 +30,36 @@ describe('App smoke', () => {
     window.location.hash = ''
   })
 
+  it('renders the stats dashboard with totals and records', async () => {
+    const base = Date.UTC(2026, 7, 24, 6) // inside the current week
+    const points = [
+      { lat: 0, lng: 0, t: base, acc: 4 },
+      { lat: 6000 / ((6371008.8 * Math.PI) / 180), lng: 0, t: base + 1_800_000, acc: 4 },
+    ]
+    await db.runs.add({
+      id: 'stats-run-1',
+      status: 'completed',
+      startedAt: base,
+      endedAt: base + 1_800_000,
+      distanceM: 6000,
+      movingMs: 1_800_000,
+      points,
+    })
+
+    window.location.hash = '#/stats'
+    render(<App />)
+
+    expect(await screen.findByText('Records', {}, { timeout: 5000 })).toBeTruthy()
+    // Hero distance (metric) — same number also appears on the longest-run card.
+    expect(screen.getAllByText('6.00').length).toBeGreaterThan(0)
+    expect(screen.getByText('Runs')).toBeTruthy()
+    // Longest-run record card navigates to detail; value shown.
+    expect(screen.getByText('Longest run')).toBeTruthy()
+
+    await db.runs.delete('stats-run-1')
+    window.location.hash = ''
+  })
+
   it('renders a completed run detail with route and splits', async () => {
     const id = 'test-run-1'
     const base = Date.UTC(2026, 7, 1, 6)

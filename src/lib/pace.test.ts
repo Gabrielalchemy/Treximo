@@ -3,6 +3,7 @@ import type { GeoPoint } from './geo'
 import { EARTH_RADIUS_M } from './geo'
 import {
   avgPaceSecPerKm,
+  bestEffortSec,
   formatClock,
   formatKm,
   formatPace,
@@ -173,5 +174,71 @@ describe('paceSeriesSecPerKm', () => {
 
   it('returns [] for tiny tracks', () => {
     expect(paceSeriesSecPerKm(track(3, 3), 100)).toEqual([])
+  })
+})
+
+describe('bestEffortSec', () => {
+  /** Piecewise track: consecutive segments at their own speeds (1 s fixes). */
+  function piecewise(segs: { dist: number; speed: number }[]): GeoPoint[] {
+    let d = 0
+    let t = 0
+    const pts: GeoPoint[] = [{ lat: 0, lng: 0, t: 0, acc: 5 }]
+    for (const s of segs) {
+      const steps = s.dist / s.speed
+      for (let k = 1; k <= steps; k++) {
+        d += s.speed
+        t += 1000
+        pts.push({ lat: d / M_PER_DEG, lng: 0, t, acc: 5 })
+      }
+    }
+    return pts
+  }
+
+  it('finds the fastest window in a uniform track', () => {
+    // 3 m/s everywhere → any exact 1000 m window takes 1000/3 s.
+    expect(bestEffortSec(track(400, 3), 1000)).toBeCloseTo(1000 / 3, 5)
+  })
+
+  it('isolates a fast middle stretch', () => {
+    const pts = piecewise([
+      { dist: 500, speed: 2 },
+      { dist: 1000, speed: 5 },
+      { dist: 500, speed: 2 },
+    ])
+    // The 1000 m fast stretch is covered in exactly 200 s.
+    expect(bestEffortSec(pts, 1000)).toBeCloseTo(200, 5)
+    // Any 1500 m window drags in 500 m of slow running on top.
+    expect(bestEffortSec(pts, 1500)).toBeCloseTo(450, 5)
+  })
+
+  it('handles two-point tracks with an interpolated start', () => {
+    // Single 100 m / 50 s segment: a 90 m window starts 10 % in → 45 s.
+    const pts: GeoPoint[] = [
+      { lat: 0, lng: 0, t: 0, acc: 5 },
+      { lat: 100 / M_PER_DEG, lng: 0, t: 50_000, acc: 5 },
+    ]
+    expect(bestEffortSec(pts, 90)).toBeCloseTo(45, 3)
+    expect(bestEffortSec(pts, 500)).toBeNull()
+  })
+
+  it('returns null for sub-target and degenerate inputs', () => {
+    expect(bestEffortSec(track(334, 3), 5000)).toBeNull() // 999 m total
+    expect(bestEffortSec(track(10, 3), 0)).toBeNull()
+    expect(bestEffortSec(track(10, 3), -5)).toBeNull()
+    expect(bestEffortSec([], 100)).toBeNull()
+    expect(bestEffortSec([track(5, 3)[0]!], 100)).toBeNull()
+  })
+
+  it('interpolates mid-segment window edges', () => {
+    // 300 m at 2 m/s (150 s), then 600 m at 6 m/s (100 s): 900 m in 250 s.
+    const pts = piecewise([
+      { dist: 300, speed: 2 },
+      { dist: 600, speed: 6 },
+    ])
+    // Fastest 700 m must start at the 200 m mark (t = 100 s) and run to
+    // the finish — only that window fits, and its start falls mid-segment.
+    expect(bestEffortSec(pts, 700)).toBeCloseTo(150, 5)
+    // The full 900 m takes the whole run.
+    expect(bestEffortSec(pts, 900)).toBeCloseTo(250, 5)
   })
 })

@@ -3,12 +3,14 @@ import { useSyncExternalStore } from 'react'
 export type Route =
   | { name: 'record' }
   | { name: 'history' }
+  | { name: 'stats' }
   | { name: 'settings' }
   | { name: 'run'; id: string }
 
 function parse(hash: string): Route {
   const h = hash.replace(/^#\/?/, '')
   if (h === 'history') return { name: 'history' }
+  if (h === 'stats') return { name: 'stats' }
   if (h === 'settings') return { name: 'settings' }
   if (h.startsWith('run/')) return { name: 'run', id: decodeURIComponent(h.slice(4)) }
   return { name: 'record' }

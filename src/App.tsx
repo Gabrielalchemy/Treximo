@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { TabBar, type Tab } from './components/TabBar'
 import { RecordScreen } from './screens/RecordScreen'
 import { HistoryScreen } from './screens/HistoryScreen'
+import { StatsScreen } from './screens/StatsScreen'
 import { RunDetailScreen } from './screens/RunDetailScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { routeKey, useRoute, type Route } from './state/router'
@@ -10,9 +11,7 @@ import { pageEase, pageVariants } from './motion/variants'
 function tabForRoute(r: Route): Tab {
   if (r.name === 'run') return 'history'
   return r.name
-}
-
-export default function App() {
+}export default function App() {
   const route = useRoute()
   const key = routeKey(route)
 
@@ -31,6 +30,7 @@ export default function App() {
           >
             {route.name === 'record' && <RecordScreen />}
             {route.name === 'history' && <HistoryScreen />}
+            {route.name === 'stats' && <StatsScreen />}
             {route.name === 'settings' && <SettingsScreen />}
             {route.name === 'run' && <RunDetailScreen id={route.id} />}
           </motion.div>

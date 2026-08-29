@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion'
 import { useGeoTracker } from '../hooks/useGeoTracker'
-import { GearIcon, RouteIcon } from './icons'
+import { GearIcon, RouteIcon, StatsIcon } from './icons'
 import { pressSpring } from '../motion/variants'
 
-export type Tab = 'record' | 'history' | 'settings'
+export type Tab = 'record' | 'history' | 'stats' | 'settings'
 
 const TABS: { id: Tab; label: string; icon: (c: string) => React.ReactNode }[] = [
   { id: 'record', label: 'Run', icon: () => <span className="block h-2.5 w-2.5 rounded-full bg-current" /> },
   { id: 'history', label: 'History', icon: (c) => <RouteIcon className={c} /> },
+  { id: 'stats', label: 'Stats', icon: (c) => <StatsIcon className={c} /> },
   { id: 'settings', label: 'Settings', icon: (c) => <GearIcon className={c} /> },
 ]
 
@@ -25,7 +26,7 @@ export function TabBar({
       className="relative z-20 border-t border-line bg-surface/90 pb-safe backdrop-blur-xl"
       aria-label="Main"
     >
-      <div className="mx-auto grid max-w-md grid-cols-3 px-2 pt-1.5">
+      <div className="mx-auto grid max-w-md grid-cols-4 px-2 pt-1.5">
         {TABS.map((t) => {
           const active = tab === t.id
           return (
