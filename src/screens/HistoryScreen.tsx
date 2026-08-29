@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { AnimatePresence, motion } from 'framer-motion'
 import { db, type StoredRun } from '../db/db'
@@ -6,6 +6,7 @@ import { importGpxFiles } from '../lib/gpx'
 import { UploadIcon } from '../components/icons'
 import { WeeklyGoalCard } from '../components/WeeklyGoalCard'
 import { useSettings } from '../state/settings'
+import { addManualRun } from '../state/session'
 import { navigate } from '../state/router'
 import {
   distanceLabel,
@@ -59,6 +60,14 @@ export function HistoryScreen() {
   )
   const fileInput = useRef<HTMLInputElement>(null)
   const [notice, setNotice] = useState<string | null>(null)
+  const [manualOpen, setManualOpen] = useState(false)
+  const [manualDistance, setManualDistance] = useState('5')
+  const [manualMinutes, setManualMinutes] = useState('30')
+  const [manualDate, setManualDate] = useState(() => new Date().toISOString().slice(0, 10))
+  const [manualTime, setManualTime] = useState(() => {
+    const now = new Date()
+    return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+  })
 
   useEffect(() => {
     if (!notice) return
@@ -79,6 +88,23 @@ export function HistoryScreen() {
     fileInput.current?.value && (fileInput.current.value = '')
   }
 
+  async function onManualSubmit(e: FormEvent) {
+    e.preventDefault()
+    const distance = Number.parseFloat(manualDistance)
+    const minutes = Number.parseFloat(manualMinutes)
+    if (!Number.isFinite(distance) || distance <= 0 || !Number.isFinite(minutes) || minutes <= 0) {
+      setNotice('Enter a valid distance and duration')
+      return
+    }
+
+    const unit = useSettings.getState().units
+    const distanceM = unit === 'metric' ? distance * 1000 : distance * 1609.344
+    const startedAt = new Date(`${manualDate}T${manualTime}:00`).getTime()
+    await addManualRun({ distanceM, movingMs: minutes * 60_000, startedAt })
+    setManualOpen(false)
+    setNotice(`Logged ${distance.toFixed(1)} ${unit === 'metric' ? 'km' : 'mi'} run`)
+  }
+
   return (
     <div className="h-full overflow-y-auto px-6 pt-safe">
       <header className="flex items-start justify-between pt-2">
@@ -86,15 +112,26 @@ export function HistoryScreen() {
           <h1 className="font-display text-2xl font-bold tracking-tight">History</h1>
           <p className="text-xs text-muted">Every mile lives on this device.</p>
         </div>
-        <motion.button
-          type="button"
-          aria-label="Import GPX files"
-          whileTap={{ scale: 0.9 }}
-          onClick={() => fileInput.current?.click()}
-          className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-muted outline-none focus-visible:ring-2 focus-visible:ring-volt"
-        >
-          <UploadIcon className="h-5 w-5" />
-        </motion.button>
+        <div className="flex items-center gap-2">
+          <motion.button
+            type="button"
+            aria-label="Quick log a run"
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setManualOpen(true)}
+            className="mt-1 flex h-10 items-center justify-center rounded-full border border-line bg-surface px-4 text-xs font-semibold uppercase tracking-[0.16em] text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+          >
+            Quick log
+          </motion.button>
+          <motion.button
+            type="button"
+            aria-label="Import GPX files"
+            whileTap={{ scale: 0.9 }}
+            onClick={() => fileInput.current?.click()}
+            className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-muted outline-none focus-visible:ring-2 focus-visible:ring-volt"
+          >
+            <UploadIcon className="h-5 w-5" />
+          </motion.button>
+        </div>
         <input
           ref={fileInput}
           type="file"
@@ -141,6 +178,93 @@ export function HistoryScreen() {
           ))}
         </motion.div>
       )}
+
+      <AnimatePresence>
+        {manualOpen && (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close quick log"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setManualOpen(false)}
+              className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 24 }}
+              className="fixed inset-x-0 bottom-0 z-40 rounded-t-[32px] border-t border-line bg-surface px-6 pb-safe pt-6"
+            >
+              <p className="font-display text-xl font-bold">Quick log a run</p>
+              <form onSubmit={onManualSubmit} className="mt-5 space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted">
+                    Distance
+                    <input
+                      type="number"
+                      min="0.1"
+                      step="0.1"
+                      value={manualDistance}
+                      onChange={(e) => setManualDistance(e.target.value)}
+                      className="mt-2 w-full rounded-2xl border border-line bg-surface-2 px-3 py-3 text-base text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+                    />
+                  </label>
+                  <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted">
+                    Minutes
+                    <input
+                      type="number"
+                      min="1"
+                      step="1"
+                      value={manualMinutes}
+                      onChange={(e) => setManualMinutes(e.target.value)}
+                      className="mt-2 w-full rounded-2xl border border-line bg-surface-2 px-3 py-3 text-base text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+                    />
+                  </label>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted">
+                    Date
+                    <input
+                      type="date"
+                      value={manualDate}
+                      onChange={(e) => setManualDate(e.target.value)}
+                      className="mt-2 w-full rounded-2xl border border-line bg-surface-2 px-3 py-3 text-base text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+                    />
+                  </label>
+                  <label className="block text-[10px] font-bold uppercase tracking-[0.18em] text-muted">
+                    Time
+                    <input
+                      type="time"
+                      value={manualTime}
+                      onChange={(e) => setManualTime(e.target.value)}
+                      className="mt-2 w-full rounded-2xl border border-line bg-surface-2 px-3 py-3 text-base text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+                    />
+                  </label>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setManualOpen(false)}
+                    className="rounded-2xl border border-line py-4 text-sm font-semibold text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="rounded-2xl bg-volt py-4 text-sm font-bold text-base outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    Save run
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

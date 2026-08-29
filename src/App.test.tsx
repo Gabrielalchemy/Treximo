@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import App from './App'
 import { db } from './db/db'
 
@@ -93,6 +93,22 @@ describe('App smoke', () => {
     expect(await screen.findByText('Goal hit · 1K')).toBeTruthy()
 
     await db.runs.delete(id)
+    window.location.hash = ''
+  })
+
+  it('lets a user quick-log a manual run', async () => {
+    window.location.hash = '#/history'
+    render(<App />)
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Quick log a run' }))
+
+    fireEvent.change(screen.getByLabelText('Distance'), { target: { value: '3' } })
+    fireEvent.change(screen.getByLabelText('Minutes'), { target: { value: '20' } })
+    fireEvent.change(screen.getByLabelText('Date'), { target: { value: '2026-08-29' } })
+    fireEvent.change(screen.getByLabelText('Time'), { target: { value: '07:30' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Save run' }))
+
+    expect(await screen.findByText('Logged 3.0 km run', {}, { timeout: 5000 })).toBeTruthy()
     window.location.hash = ''
   })
 })

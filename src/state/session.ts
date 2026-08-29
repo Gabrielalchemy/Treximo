@@ -5,6 +5,7 @@ import {
   persistActiveRun,
   saveCompletedRun,
 } from '../db/db'
+import type { GeoPoint } from '../lib/geo'
 import { TrackingEngine, browserGeoWatch, type RunResult } from '../lib/tracker'
 import { useSettings } from './settings'
 import { useGoal } from './goal'
@@ -94,6 +95,26 @@ export async function restoreSession(): Promise<boolean> {
   )
   engine.reattach()
   return true
+}
+
+export async function addManualRun(input: {
+  distanceM: number
+  movingMs: number
+  startedAt: number
+  points?: readonly GeoPoint[]
+}): Promise<string> {
+  const id = newRunId()
+  const points = (input.points ?? []).map((point) => ({ ...point, acc: point.acc ?? 0 }))
+  await db.runs.add({
+    id,
+    status: 'completed',
+    startedAt: input.startedAt,
+    endedAt: input.startedAt + input.movingMs,
+    distanceM: input.distanceM,
+    movingMs: input.movingMs,
+    points,
+  })
+  return id
 }
 
 export async function deleteRun(id: string): Promise<void> {
