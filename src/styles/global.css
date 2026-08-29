@@ -1,25 +1,21 @@
 @import 'tailwindcss';
 
 @theme {
-  /* ── Treximo dark-only palette ─────────────────────────── */
-  --color-base: #0a0b0d;
-  --color-surface: #121417;
-  --color-surface-2: #1a1d22;
+  --color-base: #090b0d;
+  --color-surface: #12171c;
+  --color-surface-2: #1a2028;
   --color-line: rgba(255, 255, 255, 0.08);
 
   --color-volt: #c8ff2e;
   --color-volt-dim: #9dcc1a;
   --color-danger: #ff5449;
 
-  --color-text: #f2f4f6;
-  --color-muted: #8a919c;
-  --color-faint: #565d68;
+  --color-text: #f4f7fb;
+  --color-muted: #9aa5b1;
+  --color-faint: #606b76;
 
-  /* ── Type ──────────────────────────────────────────────── */
   --font-display: 'Space Grotesk Variable', system-ui, sans-serif;
   --font-ui: 'Inter Variable', system-ui, sans-serif;
-
-  /* ── Motion ────────────────────────────────────────────── */
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -30,7 +26,9 @@ body,
 }
 
 html {
-  background-color: var(--color-base);
+  background:
+    radial-gradient(circle at top, rgba(200, 255, 46, 0.08), transparent 28%),
+    linear-gradient(180deg, #090b0d 0%, #101419 100%);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -40,15 +38,26 @@ body {
   color: var(--color-text);
   overscroll-behavior-y: none;
   -webkit-font-smoothing: antialiased;
+  background: transparent;
 }
 
-/* Tabular figures so live timers never jitter */
+button,
+input,
+select {
+  font: inherit;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
 .tabular {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum';
 }
 
-/* Safe-area helpers for notched devices */
 .pt-safe {
   padding-top: max(env(safe-area-inset-top), 1rem);
 }
@@ -56,7 +65,16 @@ body {
   padding-bottom: max(env(safe-area-inset-bottom), 1rem);
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.09);
+  border-radius: 999px;
+}
+
 ::selection {
-  background: var(--color-volt);
-  color: var(--color-base);
+  background: rgba(200, 255, 46, 0.35);
+  color: var(--color-text);
 }

@@ -49,7 +49,7 @@ export function SettingsScreen() {
       <motion.header
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="pt-2"
+        className="mt-2 rounded-[28px] border border-white/8 bg-white/[0.02] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
       >
         <h1 className="font-display text-2xl font-bold tracking-tight">Settings</h1>
         <p className="text-xs text-muted">Tuned to you, stored on you.</p>

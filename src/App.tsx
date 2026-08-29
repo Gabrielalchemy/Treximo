@@ -16,7 +16,7 @@ function tabForRoute(r: Route): Tab {
   const key = routeKey(route)
 
   return (
-    <div className="flex h-full flex-col overflow-hidden">
+    <div className="mx-auto flex h-full w-full max-w-md flex-col overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(200,255,46,0.12),transparent_28%),linear-gradient(180deg,#0A0B0D_0%,#0D1014_100%)] shadow-[0_30px_80px_rgba(0,0,0,0.45)] ring-1 ring-white/5">
       <main className="relative flex-1 overflow-hidden">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -26,7 +26,7 @@ function tabForRoute(r: Route): Tab {
             animate="animate"
             exit="exit"
             transition={pageEase}
-            className="absolute inset-0"
+            className="absolute inset-0 px-4"
           >
             {route.name === 'record' && <RecordScreen />}
             {route.name === 'history' && <HistoryScreen />}
@@ -36,7 +36,9 @@ function tabForRoute(r: Route): Tab {
           </motion.div>
         </AnimatePresence>
       </main>
-      <TabBar tab={tabForRoute(route)} onSelect={(t) => (location.hash = `#/${t}`)} />
+      <div className="px-2 pb-1.5">
+        <TabBar tab={tabForRoute(route)} onSelect={(t) => (location.hash = `#/${t}`)} />
+      </div>
     </div>
   )
 }

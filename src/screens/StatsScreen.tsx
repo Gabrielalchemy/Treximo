@@ -82,7 +82,7 @@ export function StatsScreen() {
 
   return (
     <div className="h-full overflow-y-auto px-6 pt-safe pb-safe">
-      <header className="pt-2">
+      <header className="mt-2 rounded-[28px] border border-white/8 bg-white/[0.02] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
         <h1 className="font-display text-2xl font-bold tracking-tight">Stats</h1>
         <p className="text-xs text-muted">Progress you can feel.</p>
       </header>
@@ -106,7 +106,7 @@ export function StatsScreen() {
           {/* All-time hero */}
           <motion.div
             variants={riseChild}
-            className="grid grid-cols-3 divide-x divide-line rounded-3xl border border-line bg-surface py-4"
+            className="grid grid-cols-3 divide-x divide-line rounded-[30px] border border-white/8 bg-[linear-gradient(180deg,rgba(21,25,31,0.88),rgba(17,20,25,0.86))] py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]"
           >
             <HeroMetric
               label="Distance"

@@ -107,7 +107,7 @@ export function HistoryScreen() {
 
   return (
     <div className="h-full overflow-y-auto px-6 pt-safe">
-      <header className="flex items-start justify-between pt-2">
+      <header className="mt-2 flex items-start justify-between rounded-[28px] border border-white/8 bg-white/[0.02] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
         <div>
           <h1 className="font-display text-2xl font-bold tracking-tight">History</h1>
           <p className="text-xs text-muted">Every mile lives on this device.</p>
@@ -118,7 +118,7 @@ export function HistoryScreen() {
             aria-label="Quick log a run"
             whileTap={{ scale: 0.9 }}
             onClick={() => setManualOpen(true)}
-            className="mt-1 flex h-10 items-center justify-center rounded-full border border-line bg-surface px-4 text-xs font-semibold uppercase tracking-[0.16em] text-text outline-none focus-visible:ring-2 focus-visible:ring-volt"
+            className="mt-1 flex h-10 items-center justify-center rounded-full border border-volt/30 bg-volt/10 px-4 text-[10px] font-semibold uppercase tracking-[0.16em] text-volt outline-none focus-visible:ring-2 focus-visible:ring-volt"
           >
             Quick log
           </motion.button>

@@ -50,14 +50,14 @@ export function ControlDock({
   onStopRequest,
 }: ControlDockProps) {
   return (
-    <div className="grid h-44 grid-cols-3 items-center justify-items-center">
+    <div className="grid h-44 grid-cols-3 items-center justify-items-center rounded-[28px] border border-white/8 bg-white/[0.02] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
       <AnimatePresence mode="popLayout" initial={false}>
         {status === 'idle' ? (
           <motion.div key="start" className="col-start-2" {...swap()}>
             <TapButton
               onPress={onStart}
               label="Start run"
-              className="h-28 w-28 bg-volt text-base"
+              className="h-28 w-28 bg-[linear-gradient(180deg,#d8ff5c,#b9f118)] text-base text-base shadow-[0_18px_40px_rgba(200,255,46,0.4)]"
             >
               <PlayIcon className="ml-1.5 h-11 w-11" />
             </TapButton>
@@ -71,7 +71,7 @@ export function ControlDock({
               <TapButton
                 onPress={onStopRequest}
                 label="Stop run"
-                className="h-16 w-16 border-2 border-danger/70 text-danger"
+                className="h-16 w-16 border-2 border-danger/70 bg-surface text-danger shadow-[0_12px_24px_rgba(255,84,73,0.18)]"
               >
                 <StopIcon className="h-6 w-6" />
               </TapButton>
@@ -81,7 +81,6 @@ export function ControlDock({
             </motion.div>
 
             <motion.div key="pause-wrap" className="relative" {...swap()}>
-              {/* Split progress ring */}
               <svg viewBox="0 0 120 120" className="absolute -inset-0 h-full w-full -rotate-90">
                 <circle cx="60" cy="60" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="5" />
                 <motion.circle
@@ -102,12 +101,11 @@ export function ControlDock({
               <TapButton
                 onPress={onPause}
                 label="Pause run"
-                className="m-4 h-24 w-24 bg-volt text-base"
+                className="m-4 h-24 w-24 bg-[linear-gradient(180deg,#d8ff5c,#b9f118)] text-base text-base shadow-[0_18px_40px_rgba(200,255,46,0.38)]"
               >
                 <PauseIcon className="h-9 w-9" />
               </TapButton>
 
-              {/* Breathing halo */}
               <motion.span
                 aria-hidden
                 className="absolute inset-4 rounded-full border border-volt/50"
@@ -128,7 +126,7 @@ export function ControlDock({
               <TapButton
                 onPress={onStopRequest}
                 label="Finish run"
-                className="h-16 w-16 bg-danger text-base"
+                className="h-16 w-16 bg-danger text-base shadow-[0_12px_24px_rgba(255,84,73,0.22)]"
               >
                 <StopIcon className="h-6 w-6" />
               </TapButton>
@@ -141,7 +139,7 @@ export function ControlDock({
               <TapButton
                 onPress={onResume}
                 label="Resume run"
-                className="h-24 w-24 bg-volt text-base"
+                className="h-24 w-24 bg-[linear-gradient(180deg,#d8ff5c,#b9f118)] text-base text-base shadow-[0_18px_40px_rgba(200,255,46,0.38)]"
               >
                 <PlayIcon className="ml-1 h-10 w-10" />
               </TapButton>

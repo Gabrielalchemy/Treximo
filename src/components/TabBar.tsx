@@ -23,28 +23,28 @@ export function TabBar({
 
   return (
     <nav
-      className="relative z-20 border-t border-line bg-surface/90 pb-safe backdrop-blur-xl"
+      className="relative z-20 rounded-[28px] border border-white/8 bg-surface/75 pb-safe shadow-[0_-8px_24px_rgba(0,0,0,0.18)] backdrop-blur-2xl"
       aria-label="Main"
     >
-      <div className="mx-auto grid max-w-md grid-cols-4 px-2 pt-1.5">
+      <div className="mx-auto grid max-w-md grid-cols-4 gap-1 px-2 py-2">
         {TABS.map((t) => {
           const active = tab === t.id
           return (
             <motion.button
               key={t.id}
               type="button"
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.96 }}
               transition={pressSpring}
               onClick={() => onSelect(t.id)}
               aria-current={active ? 'page' : undefined}
-              className={`relative flex flex-col items-center gap-0.5 rounded-2xl py-2 outline-none focus-visible:ring-2 focus-visible:ring-volt ${
+              className={`relative flex flex-col items-center gap-1 rounded-2xl py-2 outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-volt ${
                 active ? 'text-volt' : 'text-faint'
               }`}
             >
               {active && (
                 <motion.span
                   layoutId="tab-pill"
-                  className="absolute inset-x-3 inset-y-0 rounded-2xl bg-volt/10"
+                  className="absolute inset-1 rounded-2xl bg-[linear-gradient(180deg,rgba(200,255,46,0.16),rgba(200,255,46,0.06))] shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]"
                   transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                 />
               )}
@@ -68,7 +68,7 @@ export function TabBar({
                   t.icon('h-6 w-6')
                 )}
               </span>
-              <span className="text-[10px] font-semibold tracking-wider">{t.label}</span>
+              <span className="relative text-[10px] font-semibold tracking-[0.16em] uppercase">{t.label}</span>
             </motion.button>
           )
         })}
